@@ -2,19 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.magnaideas.jamclub" >
 
+    <uses-sdk android:minSdkVersion="15"  android:targetSdkVersion="21" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- The following two permissions are not required to use
+         Google Maps Android API v2, but are recommended. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"  >
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name=".Activities.LoggedOutActivity"
-            android:label="LoggedOutActivity">
+            android:label="LoggedOutActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,18 +38,27 @@
         </activity>
 
         <activity android:name=".Activities.OnDemandTrafficJamActivity"
-            android:label="OnDemandTrafficJamActivity" />
+            android:label="OnDemandTrafficJamActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".Activities.EarnLoginActivity"
-            android:label="EarnLoginActivity" />
+            android:label="EarnLoginActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".Activities.EarnPaymentActivity"
-            android:label="EarnPaymentActivity" />
+            android:label="EarnPaymentActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".Activities.RichPaymentActivity"
-            android:label="RichPaymentActivity" />
+            android:label="RichPaymentActivity"
+            android:screenOrientation="portrait"/>
 
-
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCJqU8awNvvFereO0y9K_z8Qg4nd9UPYoQ"/>
 
     </application>
 

@@ -18,14 +18,14 @@ public class LoggedOutActivity extends Activity {
         setContentView(R.layout.activity_loggedout);
     }
 
-    private void richLogin(View v)
+    public void richLogin(View v)
     {
         Intent intent = new Intent(this, OnDemandTrafficJamActivity.class);
         startActivity(intent);
 
     }
 
-    private void poorLogin(View v)
+    public void poorLogin(View v)
     {
         Intent intent = new Intent(this, EarnLoginActivity.class);
         startActivity(intent);
