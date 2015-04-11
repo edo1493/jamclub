@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#9b59b6">
+
+                <Button
+                    android:id="@+id/rich_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I am Rich and I know it"
+                    android:background="@color/background_floating_material_dark"
+                    android:textColor="#ffffff"
+                    android:onClick="richLogin" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#bdc3c7">
+
+                <Button
+                    android:id="@+id/poor_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I want to earn money when I don't use Uber"
+                    android:background="@color/background_floating_material_dark"
+                    android:textColor="#ffffff"
+                    android:onClick="poorLogin"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/uber2x78"/>
+
+    </FrameLayout>
+</LinearLayout>
