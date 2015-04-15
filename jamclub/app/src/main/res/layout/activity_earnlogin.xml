@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/button"
             android:text="Sign In Uber"
-            android:background="@color/background_floating_material_dark"
+            android:background="@drawable/loginbutton"
+            android:padding="10dp"
             android:textColor="#ffffff"
             android:onClick="earnLogin" />
 

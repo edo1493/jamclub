@@ -18,14 +18,15 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="#9b59b6">
+                android:background="#ffffff">
 
                 <Button
                     android:id="@+id/rich_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="I am Rich and I know it"
-                    android:background="@color/background_floating_material_dark"
+                    android:padding="10dp"
+                    android:background="@drawable/loginbutton"
                     android:textColor="#ffffff"
                     android:onClick="richLogin" />
 
@@ -44,8 +45,9 @@
                     android:id="@+id/poor_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/loginbutton"
+                    android:padding="10dp"
                     android:text="I want to earn money when I don't use Uber"
-                    android:background="@color/background_floating_material_dark"
                     android:textColor="#ffffff"
                     android:onClick="poorLogin"/>
 
@@ -53,8 +55,8 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/uber2x78"/>
 
