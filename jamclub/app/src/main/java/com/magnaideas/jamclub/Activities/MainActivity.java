@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import com.magnaideas.jamclub.R;
 
-
 public class MainActivity extends ActionBarActivity {
 
     @Override
