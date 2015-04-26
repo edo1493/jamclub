@@ -1,8 +1,10 @@
 package com.magnaideas.jamclub.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,13 +15,18 @@ import com.magnaideas.jamclub.R;
  */
 public class EarnPaymentActivity extends ActionBarActivity {
 
-    private Toolbar mToolbar;
+    private static final String TAG = "EarnPaymentActivity";
+
+    //private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earnpayment);
 
+        Intent intent = getIntent();
+        Log.d(TAG, intent.getStringExtra("user_info"));
+        /*
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -27,6 +34,7 @@ public class EarnPaymentActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        */
     }
 
     @Override

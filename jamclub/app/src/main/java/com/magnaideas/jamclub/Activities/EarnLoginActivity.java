@@ -1,14 +1,10 @@
 package com.magnaideas.jamclub.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.magnaideas.jamclub.R;
 
@@ -41,7 +37,7 @@ public class EarnLoginActivity extends Activity {
         alert.setView(mUberLogin);
 
         alert.show();*/
-        Intent intent = new Intent(this, EarnPaymentActivity.class);
+        Intent intent = new Intent(this, UberLoginActivity.class);
         startActivity(intent);
 
     }
