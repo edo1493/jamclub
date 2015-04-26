@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "The Jam Club": {
+            "applicationId": "YO9PnxwMx00UPahR2zJP2Lh8IiitPO63uBQ8u0NF", 
+            "masterKey": "59ImQhKFq3MUzmw98CBDwRisehnnaYCfgeLLaYIs"
+        }, 
+        "_default": {
+            "link": "The Jam Club"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.4.2"
+    }
+}
