@@ -17,18 +17,10 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:background="#ffffff">
+                android:onClick="richLogin"
+                android:background="@drawable/evil"
+                android:gravity="center">
 
-                <Button
-                    android:id="@+id/rich_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="I am Rich and I know it"
-                    android:padding="10dp"
-                    android:background="@drawable/loginbutton"
-                    android:textColor="#ffffff"
-                    android:onClick="richLogin" />
 
             </LinearLayout>
 
@@ -38,27 +30,19 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:background="#bdc3c7">
+                android:gravity="bottom|center_horizontal"
+                android:onClick="poorLogin"
+                android:background="@drawable/fox">
 
-                <Button
-                    android:id="@+id/poor_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/loginbutton"
-                    android:padding="10dp"
-                    android:text="I want to earn money when I don't use Uber"
-                    android:textColor="#ffffff"
-                    android:onClick="poorLogin"/>
 
             </LinearLayout>
         </LinearLayout>
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/uber2x78"/>
+            android:src="@drawable/thejamclub"/>
 
     </FrameLayout>
 </LinearLayout>

@@ -1,10 +1,10 @@
 package com.magnaideas.jamclub.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +40,6 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
      */
     protected Location mLastLocation;
     private GoogleMap mMap;
-    private Toolbar mToolbar;
     private TextView adressText;
 
 
@@ -51,13 +50,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ondemandtrafficjam);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("I am Rich and I know it!");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);

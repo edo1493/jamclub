@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,8 @@ public class UberLoginActivity extends ActionBarActivity {
 
         final WebView webView = new WebView(this);
         setContentView(webView);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Intent intent = new Intent(this, EarnPaymentActivity.class);
 
@@ -123,9 +127,9 @@ public class UberLoginActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

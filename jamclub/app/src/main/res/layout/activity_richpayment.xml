@@ -5,10 +5,6 @@
     android:background="#ecf0f1"
     tools:context="com.magnaideas.jamclub.Activities.RichPaymentActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

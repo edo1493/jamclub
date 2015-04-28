@@ -32,8 +32,6 @@ public class EarnPaymentActivity extends ActionBarActivity {
 
     private static final String TAG = "EarnPaymentActivity";
 
-    //private Toolbar mToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +39,8 @@ public class EarnPaymentActivity extends ActionBarActivity {
 
         ParseUser user = ParseUser.getCurrentUser();
         Toast.makeText(this,user.getUsername(),Toast.LENGTH_SHORT).show();
-
-        /*
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Rich Payment");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        */
+
     }
 
     @Override

@@ -13,20 +13,15 @@ import com.magnaideas.jamclub.R;
  */
 public class RichPaymentActivity extends ActionBarActivity {
 
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_richpayment);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Rich Payment");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     @Override
