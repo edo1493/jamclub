@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/button"
             android:text="Pay with Bitcon (coinbase)"
-            android:background="@drawable/loginbutton"
+            android:background="@drawable/material_button"
             android:padding="10dp"
             android:textColor="#ffffff"
             android:onClick="earnLogin" />

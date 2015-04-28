@@ -1,5 +1,10 @@
 <resources>
     <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
     <!-- Base theme applied no matter what API -->
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -17,5 +22,9 @@
         <item name="colorAccent">#FF4081</item>
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
+
+    <style name="ButtonAppTheme" parent="android:Widget.Material.Button">
+        <item name="android:background">@drawable/material_button</item>
     </style>
 </resources>
