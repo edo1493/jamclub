@@ -70,14 +70,14 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
             @Override
             public void afterTextChanged(Editable arg0) {}
         });
-        //autoCompView.setAdapter(adapter);
-        //autoCompView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);
 
     }
 
     public void onItemClick(AdapterView adapterView, View view, int position, long id) {
         String str = (String) adapterView.getItemAtPosition(position);
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        mSearchBox.setText("");
+        mSearchBox.setText(str);
     }
 
     public static ArrayList autocomplete(String input) {
