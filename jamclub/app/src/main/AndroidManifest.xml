@@ -39,7 +39,7 @@
         </activity>
 
         <activity android:name=".Activities.OnDemandTrafficJamActivity"
-            android:label="OnDemandTrafficJamActivity"
+            android:label="JAM DESTRUCTION"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".Activities.EarnLoginActivity"

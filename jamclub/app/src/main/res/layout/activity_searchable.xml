@@ -3,20 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp" >
+    android:padding="10dp" >
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
+    <EditText
+        android:id="@+id/searchBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Please enter your place" >
+        android:drawableLeft="@drawable/ic_action_search"
+        android:background="@drawable/material_search"
+        android:maxLines="1"
+        android:hint="Enter Jam Target"
+        android:ems="10" >
 
         <requestFocus />
-    </AutoCompleteTextView>
+    </EditText>
 
     <ListView
         android:id="@+id/listView"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

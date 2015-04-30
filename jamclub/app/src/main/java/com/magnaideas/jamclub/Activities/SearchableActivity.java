@@ -15,14 +15,20 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
@@ -39,17 +45,34 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
     private static final String API_KEY = "AIzaSyDOTjD5hHyxIBLIiZfqIgW_UVmWtCUQv_k";
 
     private ListView mListView;
+    private EditText mSearchBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+
         mListView = (ListView)findViewById(R.id.listView);
+        mSearchBox = (EditText)findViewById(R.id.searchBox);
+        mListView.setAdapter(new AutocompleteAdapter(this));
 
-        AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        mSearchBox.addTextChangedListener(new TextWatcher() {
 
-        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(this, R.layout.item_search));
-        autoCompView.setOnItemClickListener(this);
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                ((Filterable)mListView.getAdapter()).getFilter().filter(cs.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {}
+        });
+        //autoCompView.setAdapter(adapter);
+        //autoCompView.setOnItemClickListener(this);
+
     }
 
     public void onItemClick(AdapterView adapterView, View view, int position, long id) {
@@ -109,16 +132,28 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         return resultList;
     }
 
-    class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Filterable {
+    class AutocompleteAdapter extends ArrayAdapter implements Filterable {
         private ArrayList<String> resultList;
 
-        public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
+        public AutocompleteAdapter(Context context) {
+            super(context, 0);
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_search, null);
+            }
+
+            TextView result = (TextView)convertView.findViewById(R.id.results);
+            result.setText(resultList.get(position));
+            return convertView;
         }
 
         @Override
         public int getCount() {
-            return resultList.size();
+            if(resultList != null)
+                return resultList.size();
+            return 0;
         }
 
         @Override
