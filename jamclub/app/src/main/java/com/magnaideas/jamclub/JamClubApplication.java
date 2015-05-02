@@ -3,6 +3,7 @@ package com.magnaideas.jamclub;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 
 public class JamClubApplication extends Application {
 
@@ -14,6 +15,8 @@ public class JamClubApplication extends Application {
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "YO9PnxwMx00UPahR2zJP2Lh8IiitPO63uBQ8u0NF", "iwBrWy8xqdUUhU6y3owDtDz22vHXFnhDH0YpMiJF");
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
     }
 }
