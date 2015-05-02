@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
 
@@ -13,6 +15,10 @@ import com.magnaideas.jamclub.R;
  */
 public class RichPaymentActivity extends ActionBarActivity {
 
+    private TextView mLatitude;
+    private TextView mLongitude;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,18 @@ public class RichPaymentActivity extends ActionBarActivity {
         setContentView(R.layout.activity_richpayment);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            latitude = extras.getDouble("latitude");
+            longitude = extras.getDouble("longitude");
+        }
+
+        mLatitude = (TextView)findViewById(R.id.latitude);
+        mLatitude.setText(" " + latitude);
+
+        mLongitude = (TextView)findViewById(R.id.longitude);
+        mLongitude.setText(" " + longitude);
 
 
     }
