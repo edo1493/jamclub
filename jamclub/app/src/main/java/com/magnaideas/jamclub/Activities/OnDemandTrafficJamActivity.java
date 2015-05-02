@@ -2,7 +2,10 @@ package com.magnaideas.jamclub.Activities;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -25,6 +28,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.magnaideas.jamclub.R;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
 
@@ -40,7 +47,10 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
      */
     protected Location mLastLocation;
     private GoogleMap mMap;
-    private TextView adressText;
+    private TextView mAddress;
+    private LatLng mPosition;
+    private Geocoder geocoder;
+    private List<Address> addresses;
 
 
     @Override
@@ -56,8 +66,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        adressText = (TextView)findViewById(R.id.adressText);
-        adressText.setOnClickListener(new View.OnClickListener(){
+        mAddress = (TextView)findViewById(R.id.adressText);
+        mAddress.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
             {
@@ -83,9 +93,14 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
             @Override
             public void onCameraChange(CameraPosition arg0){
-                LatLng position = mMap.getCameraPosition().target;
-                Toast.makeText(getApplicationContext(), " " + position.latitude, Toast.LENGTH_SHORT).show();
+                mPosition = mMap.getCameraPosition().target;
 
+                try {
+                    new GetLocationAsync(mPosition.latitude, mPosition.longitude)
+                            .execute();
+
+                } catch (Exception e) {
+                }
             }
 
         });
@@ -175,7 +190,59 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     public void richCarsButton (View v)
     {
         Intent intent = new Intent(this, RichPaymentActivity.class);
+        intent.putExtra("latitude", mPosition.latitude);
+        intent.putExtra("longitude", mPosition.longitude);
         startActivity(intent);
+    }
+
+    private class GetLocationAsync extends AsyncTask<String, Void, String> {
+
+        double x, y;
+        StringBuilder str;
+
+        public GetLocationAsync(double latitude, double longitude) {
+            // TODO Auto-generated constructor stub
+            x = latitude;
+            y = longitude;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mAddress.setText(" Getting location ");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                
+                geocoder = new Geocoder(getApplicationContext(), Locale.ENGLISH);
+                addresses = geocoder.getFromLocation(x, y, 1);
+                str = new StringBuilder();
+                if (geocoder.isPresent()) {
+                    return addresses.get(0).getAddressLine(0) +
+                            ", " + addresses.get(0).getAddressLine(1);
+                }
+            } catch (IOException e) {
+                Log.e("tag", e.getMessage());
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                mAddress.setText(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+
+        }
     }
 }
 
