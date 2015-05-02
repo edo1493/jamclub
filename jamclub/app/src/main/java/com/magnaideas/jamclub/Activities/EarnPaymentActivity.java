@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -38,8 +44,39 @@ public class EarnPaymentActivity extends ActionBarActivity {
         setContentView(R.layout.activity_earnpayment);
 
         ParseUser user = ParseUser.getCurrentUser();
-        Toast.makeText(this,user.getUsername(),Toast.LENGTH_SHORT).show();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String prefill = ( ! user.getString("paypal_address").isEmpty() )
+                ? user.getString("paypal_address") : user.getEmail();
+        editText.setText(prefill);
+
+    }
+
+    public void submitEmail(View v) {
+
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String paypalAddress = editText.getText().toString();
+
+        if ( paypalAddress.isEmpty() || ! Patterns.EMAIL_ADDRESS.matcher(paypalAddress).matches() ) {
+            Toast.makeText(this, "Not a valid email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        editText.setEnabled(false);
+
+        final Button button = (Button) findViewById(R.id.button2);
+        button.setEnabled(false);
+
+        ParseUser user = ParseUser.getCurrentUser();
+        user.put("paypal_address", paypalAddress);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                button.setText("Saved");
+            }
+        });
 
     }
 
