@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     protected Location mLastLocation;
     private GoogleMap mMap;
     private TextView mAddress;
+    private LinearLayout mButtonSearch;
     private LatLng mPosition;
     private Geocoder geocoder;
     private List<Address> addresses;
@@ -70,8 +72,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mAddress = (TextView)findViewById(R.id.adressText);
-        mAddress.setOnClickListener(new View.OnClickListener(){
+        mButtonSearch = (LinearLayout)findViewById(R.id.buttonsearch);
+        mButtonSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
             {
