@@ -51,7 +51,10 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     private LatLng mPosition;
     private Geocoder geocoder;
     private List<Address> addresses;
+    private String mSelectedLocation;
+    private boolean mSelectedLoc = false;
 
+    private static final int PICK_LOCATION = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
             public void onClick(View v)
             {
                 Intent intent = new Intent(getApplicationContext(), SearchableActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, PICK_LOCATION);
             }
 
         });
@@ -96,8 +99,13 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 mPosition = mMap.getCameraPosition().target;
 
                 try {
-                    new GetLocationAsync(mPosition.latitude, mPosition.longitude)
-                            .execute();
+                    if(!mSelectedLoc) {
+                        new GetLocationAsync(mPosition.latitude, mPosition.longitude)
+                                .execute();
+                    } else {
+                        mAddress.setText(mSelectedLocation);
+                        mSelectedLoc = false;
+                    }
 
                 } catch (Exception e) {
                 }
@@ -195,6 +203,38 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         startActivity(intent);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_LOCATION) {
+
+            if (resultCode == RESULT_OK) {
+                mSelectedLoc = true;
+                mSelectedLocation = data.getStringExtra("address");
+            }
+        }
+    }
+
+    public LatLng getLocationFromAddress(String strAddress){
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address = null;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 1);
+            if (!coder.isPresent()) {
+                return null;
+            }
+
+        } catch (IOException e) {
+            Log.e("tag", e.getMessage());
+        }
+        Address location = address.get(0);
+        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+
+        return position;
+    }
+
     private class GetLocationAsync extends AsyncTask<String, Void, String> {
 
         double x, y;
@@ -215,13 +255,12 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         protected String doInBackground(String... params) {
 
             try {
-                
+
                 geocoder = new Geocoder(getApplicationContext(), Locale.ENGLISH);
                 addresses = geocoder.getFromLocation(x, y, 1);
                 str = new StringBuilder();
                 if (geocoder.isPresent()) {
-                    return addresses.get(0).getAddressLine(0) +
-                            ", " + addresses.get(0).getAddressLine(1);
+                    return addresses.get(0).getAddressLine(0);
                 }
             } catch (IOException e) {
                 Log.e("tag", e.getMessage());

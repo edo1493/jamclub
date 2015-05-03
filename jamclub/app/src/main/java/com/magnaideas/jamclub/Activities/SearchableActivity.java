@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -76,8 +77,11 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
 
     public void onItemClick(AdapterView adapterView, View view, int position, long id) {
         String str = (String) adapterView.getItemAtPosition(position);
-        mSearchBox.setText("");
-        mSearchBox.setText(str);
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("address", str);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     public static ArrayList autocomplete(String input) {
@@ -114,6 +118,9 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         }
 
         try {
+            System.out.println("POOOOOOOOORCOOOOOOOOO!");
+            System.out.println(jsonResults.toString());
+
             // Create a JSON object hierarchy from the results
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
@@ -121,7 +128,7 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
+                System.out.println(predsJsonArray.getJSONObject(i).toString());
                 System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
