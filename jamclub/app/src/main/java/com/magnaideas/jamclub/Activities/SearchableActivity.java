@@ -92,7 +92,7 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         try {
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            sb.append("&components=country:uk");
+            //sb.append("&components=country:uk");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
             URL url = new URL(sb.toString());
