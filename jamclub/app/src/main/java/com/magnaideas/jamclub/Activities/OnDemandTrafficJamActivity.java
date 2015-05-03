@@ -53,6 +53,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     private List<Address> addresses;
     private String mSelectedLocation;
     private boolean mSelectedLoc = false;
+    private boolean mCameraPosition = false;
 
     private static final int PICK_LOCATION = 1;
 
@@ -153,7 +154,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
         if (mLastLocation != null) {
             LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+            if(!mCameraPosition)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         }
     }
 
@@ -209,7 +211,10 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
             if (resultCode == RESULT_OK) {
                 mSelectedLoc = true;
+                mCameraPosition = true;
                 mSelectedLocation = data.getStringExtra("address");
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(mSelectedLocation), 13));
+
             }
         }
     }

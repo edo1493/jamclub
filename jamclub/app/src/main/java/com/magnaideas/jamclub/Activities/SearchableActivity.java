@@ -125,10 +125,11 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
 
+            System.out.println(predsJsonArray.toString());
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println(predsJsonArray.getJSONObject(i).toString());
+
                 System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
