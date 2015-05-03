@@ -72,6 +72,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        mAddress = (TextView)findViewById(R.id.adressText);
+
         mButtonSearch = (LinearLayout)findViewById(R.id.buttonsearch);
         mButtonSearch.setOnClickListener(new View.OnClickListener(){
             @Override
