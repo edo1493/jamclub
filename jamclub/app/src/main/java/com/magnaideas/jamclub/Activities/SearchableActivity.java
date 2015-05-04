@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,10 +78,16 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
     }
 
     public void onItemClick(AdapterView adapterView, View view, int position, long id) {
-        String str = (String) adapterView.getItemAtPosition(position);
+
+        TextView firstAddress = (TextView)view.findViewById(R.id.first_address);
+        String first = firstAddress.getText().toString();
+
+        TextView secondAddress = (TextView)view.findViewById(R.id.second_address);
+        String second = secondAddress.getText().toString();
+
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("address", str);
+        resultIntent.putExtra("address", first + second);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -118,8 +126,6 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         }
 
         try {
-            System.out.println("POOOOOOOOORCOOOOOOOOO!");
-            System.out.println(jsonResults.toString());
 
             // Create a JSON object hierarchy from the results
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
@@ -129,8 +135,6 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-
-                System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
         } catch (JSONException e) {
@@ -152,8 +156,19 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_search, null);
             }
 
-            TextView result = (TextView)convertView.findViewById(R.id.results);
-            result.setText(resultList.get(position));
+            List<String> address = Arrays.asList(resultList.get(position).split(",", 4));
+
+            TextView mFirstAddress = (TextView)convertView.findViewById(R.id.first_address);
+            mFirstAddress.setText(address.get(0));
+
+            TextView mSecondAddress = (TextView)convertView.findViewById(R.id.second_address);
+            if(address.size() > 2) {
+                mSecondAddress.setText(address.get(1) + ", " + address.get(2));
+            } else if (address.size() == 2) {
+                mSecondAddress.setText(address.get(1));
+            } else
+                mSecondAddress.setText("");
+
             return convertView;
         }
 

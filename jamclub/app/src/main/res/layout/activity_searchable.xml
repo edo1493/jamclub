@@ -7,13 +7,13 @@
 
     <EditText
         android:id="@+id/searchBox"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_action_search"
         android:background="@drawable/material_search"
         android:maxLines="1"
-        android:hint="Enter Jam Target"
-        android:ems="10" >
+        android:hint="Enter Jam Target" >
 
         <requestFocus />
     </EditText>
@@ -22,7 +22,9 @@
         android:id="@+id/listView"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:divider="@drawable/list_divider"
+        android:dividerHeight="0.2dp"/>
 
     <ImageView
         android:layout_width="100dp"
