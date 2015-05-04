@@ -138,6 +138,11 @@
             android:label="@string/title_activity_call_to_arms" >
         </activity>
 
+        <activity
+            android:name=".Activities.AttackStatusActivity"
+            android:label="Attack God mode">
+        </activity>
+
         <service android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
 

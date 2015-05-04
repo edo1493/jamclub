@@ -132,8 +132,7 @@ public class RichPaymentActivity extends ActionBarActivity {
                     // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
                     // for more details.
 
-                    Intent intent = new Intent(this, AttackStatusActivity.class);
-                    startActivity(intent);
+                    afterPayment();
 
                 } catch (JSONException e) {
                     Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -148,6 +147,10 @@ public class RichPaymentActivity extends ActionBarActivity {
         }
     }
 
+    private void afterPayment() {
+        Intent intent = new Intent(this, AttackStatusActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,6 +169,10 @@ public class RichPaymentActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
             finish();
+        }
+
+        if (id == R.id.skip_payment) {
+            afterPayment();
         }
 
         return super.onOptionsItemSelected(item);
