@@ -24,6 +24,7 @@
 
 
         <EditText
+            android:id="@+id/budget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter a budget"/>
@@ -39,11 +40,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button"
-            android:text="Pay with Bitcon (coinbase)"
+            android:text="Pay with Paypal/Card"
             android:background="@drawable/material_button"
             android:padding="10dp"
             android:textColor="#ffffff"
-            android:onClick="earnLogin" />
+            android:onClick="pay" />
 
     </LinearLayout>
 </LinearLayout>
