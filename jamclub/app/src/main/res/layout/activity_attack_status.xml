@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:clickable="true"
             android:gravity="center"
             android:background="@drawable/material_search"
             android:orientation="vertical" >
