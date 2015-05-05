@@ -21,16 +21,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TARGET SELECTED"
+                android:text="Attack In Progess"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#28b54c" />
 
             <TextView
+                android:id="@+id/address_attack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="Attack In Progress"
                 android:textSize="16sp" />
 
         </LinearLayout>

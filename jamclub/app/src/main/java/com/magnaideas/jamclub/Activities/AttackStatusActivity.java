@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,16 +29,20 @@ public class AttackStatusActivity extends ActionBarActivity implements
     private GoogleMap mMap;
     private double mLatitude;
     private double mLongitude;
+    private TextView mAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack_status);
 
+        mAddress = (TextView)findViewById(R.id.address_attack);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mLatitude = extras.getDouble("latitude");
             mLongitude = extras.getDouble("longitude");
+            mAddress.setText(extras.getString("address"));
         }
 
 

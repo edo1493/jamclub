@@ -34,6 +34,7 @@ public class RichPaymentActivity extends ActionBarActivity {
     private TextView mLongitude;
     private double latitude;
     private double longitude;
+    private String address;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -71,6 +72,7 @@ public class RichPaymentActivity extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            address = extras.getString("address");
             latitude = extras.getDouble("latitude");
             longitude = extras.getDouble("longitude");
         }
@@ -149,6 +151,7 @@ public class RichPaymentActivity extends ActionBarActivity {
 
     private void afterPayment() {
         Intent intent = new Intent(this, AttackStatusActivity.class);
+        intent.putExtra("address", address);
         intent.putExtra("latitude", latitude);
         intent.putExtra("longitude", longitude);
         startActivity(intent);
