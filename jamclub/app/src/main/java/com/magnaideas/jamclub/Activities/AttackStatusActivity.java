@@ -1,10 +1,14 @@
 package com.magnaideas.jamclub.Activities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -65,8 +69,15 @@ public class AttackStatusActivity extends ActionBarActivity implements
 
     private Bitmap resize(Drawable image) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 62, 184, false);
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, convertDpToPixel(32, this), convertDpToPixel(90, this), false);
         return bitmapResized;
+    }
+
+    public static int convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        int px = (int) (dp * (metrics.densityDpi / 160f));
+        return px;
     }
 
     @Override
