@@ -149,6 +149,8 @@ public class RichPaymentActivity extends ActionBarActivity {
 
     private void afterPayment() {
         Intent intent = new Intent(this, AttackStatusActivity.class);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
         startActivity(intent);
     }
 

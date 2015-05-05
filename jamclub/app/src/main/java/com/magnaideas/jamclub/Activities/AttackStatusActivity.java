@@ -5,14 +5,52 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.magnaideas.jamclub.R;
 
-public class AttackStatusActivity extends ActionBarActivity {
+public class AttackStatusActivity extends ActionBarActivity implements
+        OnMapReadyCallback {
+
+    private GoogleMap mMap;
+    private double mLatitude;
+    private double mLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack_status);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mLatitude = extras.getDouble("latitude");
+            mLongitude = extras.getDouble("longitude");
+        }
+
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.getUiSettings().setZoomControlsEnabled(false);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setCompassEnabled(false);
+        map.getUiSettings().setMapToolbarEnabled(false);
+        map.getUiSettings().setScrollGesturesEnabled(false);
+
+        LatLng position = new LatLng(mLatitude, mLongitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+
     }
 
     @Override
