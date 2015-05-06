@@ -168,7 +168,7 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
 
             TextView mSecondAddress = (TextView)convertView.findViewById(R.id.second_address);
             if(address.size() > 2) {
-                mSecondAddress.setText(address.get(1) + ", " + address.get(2));
+                mSecondAddress.setText(address.get(1) + "," + address.get(2));
             } else if (address.size() == 2) {
                 mSecondAddress.setText(address.get(1));
             } else
