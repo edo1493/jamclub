@@ -89,7 +89,7 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         String placeId = ((AutocompleteAdapter)mListView.getAdapter()).getPlace(position);
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("address", first + second);
+        resultIntent.putExtra("address", first + "," + second);
         resultIntent.putExtra("placeid", placeId);
         setResult(RESULT_OK, resultIntent);
         finish();
