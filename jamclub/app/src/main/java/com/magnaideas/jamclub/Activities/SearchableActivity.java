@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
+import com.magnaideas.jamclub.Utils.PairOfStrings;
 
 /**
  * Created by edoardomoreni on 19/04/2015.
@@ -85,22 +86,23 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
         TextView secondAddress = (TextView)view.findViewById(R.id.second_address);
         String second = secondAddress.getText().toString();
 
+        String placeId = ((AutocompleteAdapter)mListView.getAdapter()).getPlace(position);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("address", first + second);
+        resultIntent.putExtra("placeid", placeId);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
 
     public static ArrayList autocomplete(String input) {
-        ArrayList resultList = null;
+        ArrayList<PairOfStrings> resultList = null;
 
         HttpURLConnection conn = null;
         StringBuilder jsonResults = new StringBuilder();
         try {
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            //sb.append("&components=country:uk");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
             URL url = new URL(sb.toString());
@@ -133,9 +135,10 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
 
             System.out.println(predsJsonArray.toString());
             // Extract the Place descriptions from the results
-            resultList = new ArrayList(predsJsonArray.length());
+            resultList = new ArrayList<PairOfStrings>(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
+                resultList.add(new PairOfStrings(predsJsonArray.getJSONObject(i).getString("description"),
+                        predsJsonArray.getJSONObject(i).getString("place_id")));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Cannot process JSON results", e);
@@ -145,7 +148,7 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
     }
 
     class AutocompleteAdapter extends ArrayAdapter implements Filterable {
-        private ArrayList<String> resultList;
+        public ArrayList<PairOfStrings> resultList;
 
         public AutocompleteAdapter(Context context) {
             super(context, 0);
@@ -156,7 +159,9 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_search, null);
             }
 
-            List<String> address = Arrays.asList(resultList.get(position).split(",", 4));
+            String result = resultList.get(position).getDescription();
+
+            List<String> address = Arrays.asList(result.split(",", 4));
 
             TextView mFirstAddress = (TextView)convertView.findViewById(R.id.first_address);
             mFirstAddress.setText(address.get(0));
@@ -179,9 +184,14 @@ public class SearchableActivity extends Activity implements AdapterView.OnItemCl
             return 0;
         }
 
+        public String getPlace(int position)
+        {
+            return resultList.get(position).getPlaceId();
+        }
+
         @Override
         public String getItem(int index) {
-            return resultList.get(index);
+            return resultList.get(index).getDescription();
         }
 
         @Override

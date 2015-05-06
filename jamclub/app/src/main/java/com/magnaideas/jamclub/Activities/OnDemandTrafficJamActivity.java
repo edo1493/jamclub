@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -28,8 +29,26 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.magnaideas.jamclub.R;
+import com.magnaideas.jamclub.Utils.PairOfStrings;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,6 +56,11 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
 
     protected static final String TAG = "basic-location-sample";
+
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+    private static final String DETAILS_TYPE = "/details";
+    private static final String OUT_JSON = "/json";
+    private static final String API_KEY = "AIzaSyDOTjD5hHyxIBLIiZfqIgW_UVmWtCUQv_k";
 
     /**
      * Provides the entry point to Google Play services.
@@ -218,31 +242,55 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 mSelectedLoc = true;
                 mCameraPosition = true;
                 mSelectedLocation = data.getStringExtra("address");
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(mSelectedLocation), 13));
+                String place = data.getStringExtra("placeid");
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(place), 13));
 
             }
         }
     }
 
     public LatLng getLocationFromAddress(String strAddress){
+        String responseString = null;
 
-        Geocoder coder = new Geocoder(this);
-        List<Address> address = null;
-        LatLng p1 = null;
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         try {
-            address = coder.getFromLocationName(strAddress, 1);
-            if (!coder.isPresent()) {
-                return null;
+            StringBuilder sb = new StringBuilder(PLACES_API_BASE + DETAILS_TYPE + OUT_JSON);
+            sb.append("?placeid=" + URLEncoder.encode(strAddress, "utf8"));
+            sb.append("&key=" + API_KEY);
+
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpResponse response = httpclient.execute(new HttpGet(sb.toString()));
+            StatusLine statusLine = response.getStatusLine();
+            if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                response.getEntity().writeTo(out);
+                responseString = out.toString();
+                out.close();
             }
 
         } catch (IOException e) {
-            Log.e("tag", e.getMessage());
+                e.printStackTrace();
         }
-        Address location = address.get(0);
-        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
 
-        return position;
+        try {
+
+            JSONObject jsonObj = new JSONObject(responseString);
+            JSONObject jsonResult = jsonObj.getJSONObject("result");
+
+            JSONObject jsonGeometry = jsonResult.getJSONObject("geometry");
+            JSONObject jsonLocation = jsonGeometry.getJSONObject("location");
+            System.out.println(jsonLocation.toString());
+
+            return new LatLng(jsonLocation.getDouble("lat"), jsonLocation.getDouble("lng"));
+
+
+        } catch (JSONException e) {
+            Log.e(TAG, "Cannot process JSON results", e);
+        }
+
+        return null;
     }
 
     private class GetLocationAsync extends AsyncTask<String, Void, String> {
