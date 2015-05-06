@@ -45,7 +45,6 @@ public class AttackStatusActivity extends ActionBarActivity implements
             mAddress.setText(extras.getString("address"));
         }
 
-
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -60,8 +59,6 @@ public class AttackStatusActivity extends ActionBarActivity implements
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
         map.getUiSettings().setMapToolbarEnabled(false);
-        map.getUiSettings().setScrollGesturesEnabled(false);
-        map.getUiSettings().setZoomControlsEnabled(true);
 
         LatLng position = new LatLng(mLatitude, mLongitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
