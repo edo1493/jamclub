@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="45sp"
+            android:singleLine="true"
             android:text="Accept the call"/>
 
         <TextView
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="25sp"
+            android:singleLine="true"
             android:text="and"/>
 
         <TextView
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="45sp"
+            android:singleLine="true"
             android:text="take part in"/>
 
         <TextView
@@ -45,6 +48,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="25sp"
+            android:singleLine="true"
             android:text="a"/>
 
         <TextView
@@ -52,7 +56,17 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="45sp"
+            android:singleLine="true"
             android:text="JAM ATTACK!"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:text="ps: you can't get a Uber in the next 20mins"/>
 
     </LinearLayout>
 
