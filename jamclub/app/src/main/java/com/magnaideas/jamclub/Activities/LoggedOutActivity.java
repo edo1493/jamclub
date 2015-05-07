@@ -15,7 +15,7 @@ public class LoggedOutActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_to_arms_late);
+        setContentView(R.layout.activity_loggedout);
     }
 
     public void richLogin(View v)
