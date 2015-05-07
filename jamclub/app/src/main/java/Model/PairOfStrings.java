@@ -1,4 +1,4 @@
-package com.magnaideas.jamclub.Utils;
+package Model;
 
 /**
  * Created by edoardomoreni on 05/05/15.

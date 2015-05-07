@@ -26,16 +26,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
-import com.magnaideas.jamclub.Utils.PairOfStrings;
+import Model.PairOfStrings;
 
 /**
  * Created by edoardomoreni on 19/04/2015.
