@@ -74,7 +74,7 @@ public class AttackStatusActivity extends ActionBarActivity implements
 
     private Bitmap resize(Drawable image) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 70, 210, true);
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 70, 180, true);
         return bitmapResized;
     }
 

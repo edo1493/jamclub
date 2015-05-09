@@ -343,7 +343,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
     private Drawable resize(Drawable image) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 70, 210, true);
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 70, 180, true);
         return new BitmapDrawable(getResources(), bitmapResized);
     }
 }
