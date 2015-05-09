@@ -1,6 +1,9 @@
 package com.magnaideas.jamclub.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,6 +75,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     private String mSelectedLocation;
     private boolean mSelectedLoc = false;
     private boolean mCameraPosition = false;
+    private ImageView mPin;
 
     private static final int PICK_LOCATION = 1;
 
@@ -86,6 +91,9 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mPin = (ImageView)findViewById(R.id.imageView1);
+        mPin.setBackground(resize(getDrawable(R.drawable.pin)));
 
         mAddress = (TextView)findViewById(R.id.adressText);
 
@@ -331,6 +339,12 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
         protected void onProgressUpdate(Void... values) {
 
         }
+    }
+
+    private Drawable resize(Drawable image) {
+        Bitmap b = ((BitmapDrawable)image).getBitmap();
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 70, 210, true);
+        return new BitmapDrawable(getResources(), bitmapResized);
     }
 }
 
