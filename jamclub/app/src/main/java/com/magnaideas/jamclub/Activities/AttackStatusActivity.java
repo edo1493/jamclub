@@ -20,8 +20,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.magnaideas.jamclub.R;
+import com.magnaideas.jamclub.Utils.LatLngInterpolator;
+import com.magnaideas.jamclub.Utils.MarkerAnimation;
 
 public class AttackStatusActivity extends ActionBarActivity implements
         OnMapReadyCallback {
@@ -73,6 +76,13 @@ public class AttackStatusActivity extends ActionBarActivity implements
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 90, 270, true);
         return bitmapResized;
+    }
+
+    //this method wants marker and its final position
+    public static void moveMarkers(Marker m, LatLng finalPosition)
+    {
+        LatLngInterpolator interpolator = new LatLngInterpolator.Linear();
+        MarkerAnimation.animateMarkerToGB(m, finalPosition, interpolator);
     }
 
     @Override

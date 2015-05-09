@@ -3,6 +3,8 @@ package com.magnaideas.jamclub.Utils;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.IBinder;
 
 /**
@@ -18,6 +20,7 @@ public class GodModeService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        new retrieveLocations().execute();
 
         return START_STICKY;
     }
@@ -31,4 +34,27 @@ public class GodModeService extends Service {
     {
         return null;
     }
+
+    private class retrieveLocations extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            //Parse Query
+
+            String response = "ciao";
+
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    new retrieveLocations().execute();
+                }
+            }, 5000);
+        }
+    }
 }
+
