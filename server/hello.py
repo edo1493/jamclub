@@ -37,7 +37,7 @@ def uberlogin():
     parameters = {
         'response_type': 'code',
         'redirect_uri': 'https://jamclub.herokuapp.com/ubertoken',
-        'scope': 'profile',
+        'scope': 'profile request',
     }
 
     # Redirect user here to authorize your application

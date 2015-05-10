@@ -2,28 +2,71 @@ package com.magnaideas.jamclub.Activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.magnaideas.jamclub.R;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 public class CallToArmsActivity extends ActionBarActivity {
 
+    private static final String TAG = "CallToArmsActivity";
+    private String attack_id = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_to_arms);
 
         // TODO: check if attack is still ongoing
+        try {
+            JSONObject json = new JSONObject(getIntent().getExtras().getString("com.parse.Data"));
+            Log.d(TAG, json.toString());
+            attack_id = json.getString("attack_id");
+            Log.d(TAG, attack_id);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public void accept(View view) {
+        // send acceptance to server - associate with attack id
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Attack");
+        query.getInBackground(attack_id, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    ParseObject accepted = new ParseObject("Acceptance");
+                    accepted.put("user", ParseUser.getCurrentUser());
+                    accepted.put("attack", object);
+                    accepted.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            // Thank the user and quit the app
+                        }
+                    });
 
+                } else {
+                    // something went wrong
+                }
+            }
+        });
     }
 
     public void decline(View view) {
-
+        // do nothing special
+        // quit the app
     }
 
     @Override

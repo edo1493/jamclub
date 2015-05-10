@@ -15,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -134,7 +138,7 @@ public class RichPaymentActivity extends ActionBarActivity {
                     // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
                     // for more details.
 
-                    afterPayment();
+                    afterPayment(confirm, null);
 
                 } catch (JSONException e) {
                     Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -149,12 +153,28 @@ public class RichPaymentActivity extends ActionBarActivity {
         }
     }
 
-    private void afterPayment() {
-        Intent intent = new Intent(this, AttackStatusActivity.class);
-        intent.putExtra("address", address);
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
-        startActivity(intent);
+    private void afterPayment(PaymentConfirmation confirm, BigDecimal budget) {
+        ParseObject attack = new ParseObject("Attack");
+        attack.put("attacker", ParseUser.getCurrentUser());
+        if (confirm != null) {
+            attack.put("payment_info", confirm.getPayment().toJSONObject());
+            attack.put("payment_confirmation", confirm.toJSONObject());
+        }
+        //attack.put("address", address);
+        attack.put("latitude", latitude);
+        attack.put("longitude", longitude);
+        if (budget != null) attack.put("budget", budget);
+        attack.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Intent intent = new Intent(getApplicationContext(), AttackStatusActivity.class);
+                intent.putExtra("address", address);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -177,7 +197,16 @@ public class RichPaymentActivity extends ActionBarActivity {
         }
 
         if (id == R.id.skip_payment) {
-            afterPayment();
+            EditText budgetEditText = (EditText) findViewById(R.id.budget);
+            String budgetString = budgetEditText.getText().toString();
+            BigDecimal budget;
+            try {
+                budget = new BigDecimal(budgetString);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Not a valid amount", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            afterPayment(null, budget);
         }
 
         return super.onOptionsItemSelected(item);

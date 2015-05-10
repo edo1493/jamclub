@@ -76,12 +76,21 @@ app.get('/ubertoken', function(req,res) {
 
 });
 
-/*
-app.post('/friends_changed', function(req, res) {
-  console.log('friends_changed POST triggered');
+
+app.post('/uberhook', function(req, res) {
+  console.log('uber hook POST triggered');
   console.log('Request: ' + req.query);
-  res.send(req.query['hub.challenge']);
+  res.status(200).send();
 });
-*/
+
+app.get('/uberstatustest', function(req,res) {
+  var request_id = req.query['request_id'];
+  Parse.Cloud.run('uberStatusUpdate', {request_id: request_id}, {
+    success: function(result) {
+      res.status(200).send(result);
+    },
+    error: function(success) {},
+  });
+});
 
 app.listen();
