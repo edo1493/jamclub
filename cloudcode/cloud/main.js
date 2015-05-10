@@ -82,126 +82,131 @@ Parse.Cloud.afterSave("Attack", function(request, response) {
 
 Parse.Cloud.beforeSave("Acceptance", function(request, response) {
 
-  // get user's uber token
-  if (request.user != null) {
-    var token = request.user.get('uber_access_token');
+  if (request.object.get('request_id') == null) {
+    // get user's uber token
+    if (request.user != null) {
+      var token = request.user.get('uber_access_token');
+      console.log("user:" + request.user.get('email'))
+      // get attacks coordinate
+      var attack = request.object.get('attack');
+      attack.fetch({
+        success: function(object) {
+          var latitude = object.get('latitude');
+          var longitude = object.get('longitude');
 
-    // get attacks coordinate
-    var attack = request.object.get('attack');
-    attack.fetch({
-      success: function(object) {
-        var latitude = object.get('latitude');
-        var longitude = object.get('longitude');
+          // get all products - sort by min price
+          Parse.Cloud.httpRequest({
+            url: 'https://api.uber.com/v1/estimates/price',
+            headers: {
+                'Authorization': 'Bearer '+token
+            },
+            params: {
+              start_latitude: latitude,
+              start_longitude: longitude,
+              end_latitude: latitude,
+              end_longitude: longitude,
+            },
+            success: function(httpResponse) {
+              var products = httpResponse['data']['prices'];
 
-        // get all products - sort by min price
-        Parse.Cloud.httpRequest({
-          url: 'https://api.uber.com/v1/estimates/price',
-          headers: {
-              'Authorization': 'Bearer '+token
-          },
-          params: {
-            start_latitude: latitude,
-            start_longitude: longitude,
-            end_latitude: latitude,
-            end_longitude: longitude,
-          },
-          success: function(httpResponse) {
-            var products = httpResponse['data']['prices'];
+              products.sort(function(a,b) {
+                if (a.high_estimate < b.high_estimate)
+                  return -1;
+                if (a.high_estimate > b.high_estimate)
+                  return 1;
+                return 0;
+              });
 
-            products.sort(function(a,b) {
-              if (a.high_estimate < b.high_estimate)
-                return -1;
-              if (a.high_estimate > b.high_estimate)
-                return 1;
-              return 0;
-            });
+              // products now contains array of uber opts ordered from cheapest
+              products.forEach(function(product, index) {
+                if (product.high_estimate != null) {
 
-            // products now contains array of uber opts ordered from cheapest
-            products.forEach(function(product, index) {
-              if (product.high_estimate != null) {
+                  // check if estimate is within budget
+                  var estimate = product.high_estimate;
+                  console.log("estimate:" + estimate);
 
-                // check if estimate is within budget
-                var estimate = product.high_estimate;
-                console.log("estimate:" + estimate);
+                  var budget_left = object.get('budget_left');
+                  console.log("budget_left:" + budget_left);
 
-                var budget_left = object.get('budget_left');
-                console.log("budget_left:" + budget_left);
+                  if (budget_left - estimate >= 0) {
+                    // there is still money left
+                    // request car
+                    var product_id = product.product_id;
+                    var product_name = product.display_name;
 
-                if (budget_left - estimate >= 0) {
-                  // there is still money left
-                  // request car
-                  var product_id = product.product_id;
-                  var product_name = product.display_name;
+                    console.log("coordinates: " + latitude + " " + longitude);
+                    console.log("product_id: " + product_id);
+                    //console.log("token: " + token);
 
-                  console.log("coordinates: " + latitude + " " + longitude);
-                  console.log("product_id: " + product_id);
-                  //console.log("token: " + token);
+                    var request_lock = false;
 
-                  var request_lock = false;
+                    Parse.Cloud.httpRequest({
+                      method: 'POST',
+                      url: 'https://sandbox-api.uber.com/v1/requests',
+                      headers: {
+                          'Authorization': 'Bearer '+token,
+                          'Content-Type': 'application/json;',
+                      },
+                      body: {
+                        product_id: product_id,
+                        start_latitude: latitude,
+                        start_longitude: longitude,
+                        //end_latitude: latitude,
+                        //end_longitude: longitude,
+                      },
+                      success: function(httpResponse) {
+                        if (!request_lock) {
+                          request_lock = true;
 
-                  Parse.Cloud.httpRequest({
-                    method: 'POST',
-                    url: 'https://sandbox-api.uber.com/v1/requests',
-                    headers: {
-                        'Authorization': 'Bearer '+token,
-                        'Content-Type': 'application/json;',
-                    },
-                    body: {
-                      product_id: product_id,
-                      start_latitude: latitude,
-                      start_longitude: longitude,
-                      //end_latitude: latitude,
-                      //end_longitude: longitude,
-                    },
-                    success: function(httpResponse) {
-                      if (!request_lock) {
-                        request_lock = true;
+                          console.log('success');
+                          console.log(httpResponse['data']);
 
-                        console.log('success');
-                        console.log(httpResponse['data']);
+                          // register request_id in db
+                          request.object.set("request_id", httpResponse['data']['request_id']);
+                          request.object.set("request_status", httpResponse['data']['status']);
+                          request.object.set("request_surge_multiplier", httpResponse['data']['surge_multiplier']);
+                          request.object.set("request_product_id", product_id);
+                          request.object.set("request_product_name", product_name);
+                          request.object.set("request_estimate", estimate);
 
-                        // register request_id in db
-                        request.object.set("request_id", httpResponse['data']['request_id']);
-                        request.object.set("request_status", httpResponse['data']['status']);
-                        request.object.set("request_surge_multiplier", httpResponse['data']['surge_multiplier']);
-                        request.object.set("request_product_id", product_id);
-                        request.object.set("request_product_name", product_name);
-                        request.object.set("request_estimate", estimate);
+                          // reduce budget_left
+                          Parse.Cloud.run("decreaseBudget", {
+                            attack_id: object.id,
+                            amount: estimate,
+                          }, {
+                            success: function(result) {
+                              console.log("budget decreased");
+                              response.success();
+                            },
+                            error: function(error) {}
+                          });
 
-                        // reduce budget_left
-                        Parse.Cloud.run("decreaseBudget", {
-                          attack_id: object.id,
-                          amount: estimate,
-                        }, {
-                          success: function(result) {
-                            console.log("budget decreased");
-                            response.success();
-                          },
-                          error: function(error) {}
-                        });
-
+                        }
+                      },
+                      error: function(httpResponse) {
+                        console.error('error');
+                        console.error(httpResponse['data']);
                       }
-                    },
-                    error: function(httpResponse) {
-                      console.error('error');
-                      console.error(httpResponse['data']);
-                    }
-                  });
+                    });
+                  }
                 }
-              }
-            });
-          },
-          error: function(httpResponse) {
-            console.error(httpResponse);
-            response.error();
-          }
-        });
-      },
-      error: function(object, error) {
-        console.error(error);
-        response.error();
-      }
-    });
+              });
+            },
+            error: function(httpResponse) {
+              console.error(httpResponse);
+              response.error();
+            }
+          });
+        },
+        error: function(object, error) {
+          console.error(error);
+          response.error();
+        }
+      });
+
+    } else {
+      response.success();
+    }
 
   } else {
     response.success();
