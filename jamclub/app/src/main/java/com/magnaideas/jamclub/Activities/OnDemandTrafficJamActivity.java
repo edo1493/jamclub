@@ -85,7 +85,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("attack", MODE_PRIVATE);
         String attack_id = sharedPref.getString("attack_id", null);
         if (attack_id != null) {
             Intent intent = new Intent(this, AttackStatusActivity.class);

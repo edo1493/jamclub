@@ -220,13 +220,15 @@ public class AttackStatusActivity extends ActionBarActivity implements
         }
         if (id == R.id.action_new_attack) {
 
-            SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("attack",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.remove("attack_id");
-            editor.commit();
+            if (editor.commit() ) {
+                Intent intent = new Intent(this, OnDemandTrafficJamActivity.class);
+                startActivity(intent);
 
-            Intent intent = new Intent(this, OnDemandTrafficJamActivity.class);
-            startActivity(intent);
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
