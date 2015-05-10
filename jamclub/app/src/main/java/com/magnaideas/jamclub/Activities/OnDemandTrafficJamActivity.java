@@ -227,7 +227,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     public void richCarsButton (View v)
     {
         Intent intent = new Intent(this, RichPaymentActivity.class);
-        intent.putExtra("address", mAddress.getText());
+        intent.putExtra("address", mAddress.getText().toString());
         intent.putExtra("latitude", mPosition.latitude);
         intent.putExtra("longitude", mPosition.longitude);
         startActivity(intent);
