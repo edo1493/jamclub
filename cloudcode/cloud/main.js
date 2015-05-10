@@ -174,6 +174,7 @@ Parse.Cloud.beforeSave("Acceptance", function(request, response) {
                           amount: estimate,
                         }, {
                           success: function(result) {
+                            console.log("budget decreased");
                             response.success();
                           },
                           error: function(error) {}
@@ -189,15 +190,16 @@ Parse.Cloud.beforeSave("Acceptance", function(request, response) {
                 }
               }
             });
-
           },
           error: function(httpResponse) {
             console.error(httpResponse);
+            response.error();
           }
         });
       },
       error: function(object, error) {
         console.error(error);
+        response.error();
       }
     });
 
