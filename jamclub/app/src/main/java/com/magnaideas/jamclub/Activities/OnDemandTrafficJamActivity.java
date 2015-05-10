@@ -317,7 +317,11 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 addresses = geocoder.getFromLocation(x, y, 1);
                 str = new StringBuilder();
                 if (geocoder.isPresent()) {
-                    return addresses.get(0).getAddressLine(0);
+                    try {
+                        return addresses.get(0).getAddressLine(0);
+                    } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    }
                 }
             } catch (IOException e) {
                 Log.e("tag", e.getMessage());

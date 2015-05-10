@@ -329,3 +329,26 @@ Parse.Cloud.define("uberUpdateLocation", function(request, response) {
   });
 
 });
+
+Parse.Cloud.define("checkAvailability", function(request, response) {
+  var latitude = request.params.latitude;
+  var longitude = request.params.longitude;
+
+  Parse.Cloud.httpRequest({
+    method: "GET",
+    url: "https://api.uber.com/v1/products",
+    params: {
+      server_token: "ksG2fhbBgiH4HGp83Vh9GQp0EaOgewPellvW3f1h",
+      latitude: latitude,
+      longitude: longitude,
+    },
+    success: function(httpResponse) {
+      console.log(httpResponse.text);
+      response.success(httpResponse.text);
+    },
+    error: function(httpResponse) {
+      console.error(httpResponse.text);
+      response.error(httpResponse.text);
+    },
+  });
+});

@@ -10,11 +10,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.magnaideas.jamclub.R;
+import com.parse.FunctionCallback;
+import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -25,15 +29,21 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+
+import static com.magnaideas.jamclub.R.id.button;
 
 /**
  * Created by edoardomoreni on 11/04/2015.
  */
 public class RichPaymentActivity extends ActionBarActivity {
 
+    private static final String TAG = "RichPaymentActivity";
     private TextView mLatitude;
     private TextView mLongitude;
     private double latitude;
@@ -87,6 +97,50 @@ public class RichPaymentActivity extends ActionBarActivity {
         mLongitude = (TextView)findViewById(R.id.longitude);
         mLongitude.setText(" " + longitude);
 
+        final Button payButton = (Button) findViewById(R.id.button);
+        payButton.setEnabled(false);
+
+        final EditText budgetEdit = (EditText) findViewById(R.id.budget);
+        budgetEdit.setEnabled(false);
+
+        final TextView currencyTextView = (TextView)findViewById(R.id.currency);
+
+
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+        ParseCloud.callFunctionInBackground("checkAvailability", params, new FunctionCallback<String>() {
+            @Override
+            public void done(String o, ParseException e) {
+                Log.d(TAG, o);
+
+                try {
+                    JSONObject result = new JSONObject(o);
+                    Log.d(TAG, result.toString());
+                    JSONArray products = result.getJSONArray("products");
+                    Log.d(TAG, products.toString());
+                    if (products.length() > 0) {
+                        // ok
+
+                        // show currency on this page
+                        JSONObject product = products.getJSONObject(0);
+                        String currency_code = product.getJSONObject("price_details").getString("currency_code");
+                        Log.d(TAG, currency_code);
+                        currencyTextView.setText(" " + currency_code);
+
+                        budgetEdit.setEnabled(true);
+                        payButton.setEnabled(true);
+
+                    } else {
+                        // TODO: show "uber not available in this area"
+                        currencyTextView.setText("UBER is not available in this area.");
+
+                    }
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 
     public void pay(View view) {
