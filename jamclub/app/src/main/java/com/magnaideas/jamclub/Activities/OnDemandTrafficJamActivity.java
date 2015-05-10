@@ -1,6 +1,7 @@
 package com.magnaideas.jamclub.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -81,6 +82,16 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+        String attack_id = sharedPref.getString("attack_id", null);
+        if (attack_id != null) {
+            Intent intent = new Intent(this, AttackStatusActivity.class);
+            intent.putExtra("attack_id", attack_id);
+            startActivity(intent);
+            finish();
+        }
+
         buildGoogleApiClient();
 
         super.onCreate(savedInstanceState);

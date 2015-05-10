@@ -2,6 +2,7 @@ package com.magnaideas.jamclub.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -208,24 +209,35 @@ public class RichPaymentActivity extends ActionBarActivity {
     }
 
     private void afterPayment(PaymentConfirmation confirm, BigDecimal budget) {
-        ParseObject attack = new ParseObject("Attack");
+        final ParseObject attack = new ParseObject("Attack");
         attack.put("attacker", ParseUser.getCurrentUser());
         if (confirm != null) {
             attack.put("payment_info", confirm.getPayment().toJSONObject());
             attack.put("payment_confirmation", confirm.toJSONObject());
         }
-        //attack.put("address", address);
+
         attack.put("latitude", latitude);
         attack.put("longitude", longitude);
+        if (address != null) attack.put("address", address);
         if (budget != null) attack.put("budget", budget);
+
         attack.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Intent intent = new Intent(getApplicationContext(), AttackStatusActivity.class);
-                intent.putExtra("address", address);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                startActivity(intent);
+                Log.d(TAG, "" + attack.getObjectId());
+
+                SharedPreferences sharedPref = getSharedPreferences("attack", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("attack_id", attack.getObjectId());
+                if ( editor.commit() ) {
+                    Log.d(TAG, "sharedpref committed");
+                    Intent intent = new Intent(getApplicationContext(), AttackStatusActivity.class);
+                    //intent.putExtra("attack_id", attack.getObjectId());
+                    //intent.putExtra("address", address);
+                    //intent.putExtra("latitude", latitude);
+                    //intent.putExtra("longitude", longitude);
+                    startActivity(intent);
+                }
             }
         });
 

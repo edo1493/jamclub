@@ -6,11 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * Created by edoardomoreni on 07/05/15.
  */
 public class GodModeService extends Service {
+
+    private static final String TAG = "GodModeService";
+
+    //private RetrieveLocations updateTask = new RetrieveLocations();
+    private boolean doNotStartMoreTasks = false;
 
     public void onCreate()
     {
@@ -20,9 +26,16 @@ public class GodModeService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        new retrieveLocations().execute();
+        doNotStartMoreTasks = false;
+        new RetrieveLocations().execute();
 
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        doNotStartMoreTasks = true;
+        super.onDestroy();
     }
 
     public void onStart(Context context,Intent intent, int startId)
@@ -35,7 +48,7 @@ public class GodModeService extends Service {
         return null;
     }
 
-    private class retrieveLocations extends AsyncTask<String, String, String> {
+    private class RetrieveLocations extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -43,6 +56,7 @@ public class GodModeService extends Service {
             //Parse Query
 
             String response = "ciao";
+            Log.d(TAG, "servicetask triggered");
 
             return response;
         }
@@ -51,7 +65,8 @@ public class GodModeService extends Service {
         protected void onPostExecute(String result) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    new retrieveLocations().execute();
+                    if (! doNotStartMoreTasks)
+                        new RetrieveLocations().execute();
                 }
             }, 5000);
         }

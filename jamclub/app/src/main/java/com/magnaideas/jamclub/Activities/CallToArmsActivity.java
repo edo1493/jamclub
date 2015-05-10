@@ -10,6 +10,7 @@ import android.view.View;
 import com.magnaideas.jamclub.R;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -53,12 +54,18 @@ public class CallToArmsActivity extends ActionBarActivity {
                     accepted.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            // Thank the user and quit the app
+                            if (e == null) {
+                                // Thank the user and quit the app
+
+                            } else {
+                                Log.e(TAG, e.toString());
+                            }
                         }
                     });
 
                 } else {
                     // something went wrong
+                    Log.e(TAG, e.toString());
                 }
             }
         });
