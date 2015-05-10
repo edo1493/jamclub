@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -79,6 +80,7 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
     private ImageView mPin;
 
     private static final int PICK_LOCATION = 1;
+    private static final int UBER_SEARCH = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -237,15 +239,16 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
     public void richCarsButton (View v)
     {
-        Intent intent = new Intent(this, RichPaymentActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProgressToRichPayment.class);
         intent.putExtra("address", mAddress.getText().toString());
         intent.putExtra("latitude", mPosition.latitude);
         intent.putExtra("longitude", mPosition.longitude);
-        startActivity(intent);
+        startActivityForResult(intent, UBER_SEARCH);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("PORCOOOOOO DIOOOOOOOOOOOO!");
         if (requestCode == PICK_LOCATION) {
 
             if (resultCode == RESULT_OK) {
@@ -256,6 +259,10 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(place), 13));
 
             }
+        } else if (requestCode == UBER_SEARCH) {
+
+            if (resultCode == RESULT_OK)
+                Toast.makeText(this, "UBER is not available in this area", Toast.LENGTH_LONG);
         }
     }
 

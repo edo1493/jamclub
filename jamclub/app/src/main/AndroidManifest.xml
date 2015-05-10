@@ -92,6 +92,9 @@
             android:name=".Activities.SearchableActivity"
             android:label="RichPaymentActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ProgressToRichPayment"
+            android:label=""
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.UberLoginActivity"
             android:label="Authenticate with Uber"

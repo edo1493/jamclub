@@ -50,6 +50,7 @@ public class RichPaymentActivity extends ActionBarActivity {
     private double latitude;
     private double longitude;
     private String address;
+    private String currencyCode;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -90,7 +91,9 @@ public class RichPaymentActivity extends ActionBarActivity {
             address = extras.getString("address");
             latitude = extras.getDouble("latitude");
             longitude = extras.getDouble("longitude");
+            currencyCode = extras.getString("currency");
         }
+
 
         mLatitude = (TextView)findViewById(R.id.latitude);
         mLatitude.setText(" " + latitude);
@@ -99,49 +102,14 @@ public class RichPaymentActivity extends ActionBarActivity {
         mLongitude.setText(" " + longitude);
 
         final Button payButton = (Button) findViewById(R.id.button);
-        payButton.setEnabled(false);
+        payButton.setEnabled(true);
 
         final EditText budgetEdit = (EditText) findViewById(R.id.budget);
-        budgetEdit.setEnabled(false);
+        budgetEdit.setEnabled(true);
 
         final TextView currencyTextView = (TextView)findViewById(R.id.currency);
+        currencyTextView.setText(" " + currencyCode);
 
-
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("latitude", latitude);
-        params.put("longitude", longitude);
-        ParseCloud.callFunctionInBackground("checkAvailability", params, new FunctionCallback<String>() {
-            @Override
-            public void done(String o, ParseException e) {
-                Log.d(TAG, o);
-
-                try {
-                    JSONObject result = new JSONObject(o);
-                    Log.d(TAG, result.toString());
-                    JSONArray products = result.getJSONArray("products");
-                    Log.d(TAG, products.toString());
-                    if (products.length() > 0) {
-                        // ok
-
-                        // show currency on this page
-                        JSONObject product = products.getJSONObject(0);
-                        String currency_code = product.getJSONObject("price_details").getString("currency_code");
-                        Log.d(TAG, currency_code);
-                        currencyTextView.setText(" " + currency_code);
-
-                        budgetEdit.setEnabled(true);
-                        payButton.setEnabled(true);
-
-                    } else {
-                        // TODO: show "uber not available in this area"
-                        currencyTextView.setText("UBER is not available in this area.");
-
-                    }
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
     }
 
     public void pay(View view) {
