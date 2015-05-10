@@ -48,7 +48,7 @@ public class EarnPaymentActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         EditText editText = (EditText) findViewById(R.id.editText);
-        String prefill = ( ! user.getString("paypal_address").isEmpty() )
+        String prefill = ( user.getString("paypal_address") != null )
                 ? user.getString("paypal_address") : user.getEmail();
         editText.setText(prefill);
 
