@@ -95,11 +95,11 @@ public class RichPaymentActivity extends ActionBarActivity {
         }
 
 
-        mLatitude = (TextView)findViewById(R.id.latitude);
-        mLatitude.setText(" " + latitude);
+        //mLatitude = (TextView)findViewById(R.id.latitude);
+        //mLatitude.setText(" " + latitude);
 
-        mLongitude = (TextView)findViewById(R.id.longitude);
-        mLongitude.setText(" " + longitude);
+        //mLongitude = (TextView)findViewById(R.id.longitude);
+        //mLongitude.setText(" " + longitude);
 
         final Button payButton = (Button) findViewById(R.id.button);
         payButton.setEnabled(true);

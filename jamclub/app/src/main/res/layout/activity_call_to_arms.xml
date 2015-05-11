@@ -66,7 +66,7 @@
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:singleLine="true"
-            android:text="ps: you can't get a Uber in the next 20mins"/>
+            android:text="ps: please do not use Uber within the next 20mins"/>
 
     </LinearLayout>
 

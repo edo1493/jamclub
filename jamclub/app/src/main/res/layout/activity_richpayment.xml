@@ -2,38 +2,79 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ecf0f1"
+    android:background="#ffffff"
     tools:context="com.magnaideas.jamclub.Activities.RichPaymentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:layout_weight="1"
+        android:paddingTop="20dp"
         >
 
-        <TextView
-            android:id="@+id/latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/longitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/currency"
+        <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Checking Location..."/>
+            android:textSize="30sp"
+            android:textColor="#34495e"
+            android:singleLine="true"
+            android:text="Jam Attack Rules"/>
 
-
-        <EditText
-            android:id="@+id/budget"
+        <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter a budget"/>
+            android:textSize="15sp"
+            android:textColor="#34495e"
+            android:layout_marginTop="30dp"
+            android:singleLine="true"
+            android:text="1) We'll order Ubers till the budget runs out"/>
 
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="2) The attack can't be stopped after the payment"/>
+
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="3) Insert a minimum of 300 in the following currency"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/budget"
+                android:textSize="25sp"
+                android:textColor="#34495e"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:hint="Enter a budget"/>
+
+            <com.magnaideas.jamclub.Utils.CustomTextView
+                android:id="@+id/currency"
+                android:layout_marginLeft="10dp"
+                android:textColor="#34495e"
+                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
