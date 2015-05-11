@@ -9,51 +9,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="20dp"
         android:gravity="center_horizontal"
         android:layout_weight="1"
         android:paddingTop="20dp"
         >
 
-        <com.magnaideas.jamclub.Utils.CustomTextView
+        <com.magnaideas.jamclub.Utils.CustomTitle
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="35sp"
             android:textColor="#34495e"
             android:singleLine="true"
+            android:layout_gravity="center_horizontal"
             android:text="Jam Attack Rules"/>
 
         <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="25sp"
             android:textColor="#34495e"
             android:layout_marginTop="30dp"
-            android:singleLine="true"
-            android:text="1) We'll order Ubers till the budget runs out"/>
+            android:text="We'll order Ubers till the budget runs out."/>
 
         <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#34495e"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:singleLine="true"
-            android:text="2) The attack can't be stopped after the payment"/>
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:text="You can't stop the attack after the payment."/>
 
-        <com.magnaideas.jamclub.Utils.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#34495e"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:singleLine="true"
-            android:text="3) Insert a minimum of 300 in the following currency"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_horizontal">
 
@@ -70,7 +62,7 @@
                 android:id="@+id/currency"
                 android:layout_marginLeft="10dp"
                 android:textColor="#34495e"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

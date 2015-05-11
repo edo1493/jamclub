@@ -7,61 +7,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
         android:paddingTop="20dp"
         >
 
-        <com.magnaideas.jamclub.Utils.CustomTextView
+        <com.magnaideas.jamclub.Utils.CustomTitle
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="35sp"
             android:textColor="#34495e"
             android:singleLine="true"
+            android:layout_gravity="center_horizontal"
             android:text="Jam Bot Rules"/>
 
         <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="25sp"
             android:textColor="#34495e"
             android:layout_marginTop="30dp"
-            android:singleLine="true"
-            android:text="1) You are now logged in!"/>
+            android:text="You are now logged in!"/>
 
         <com.magnaideas.jamclub.Utils.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#34495e"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:singleLine="true"
-            android:text="2) You'll get a notification, if we need you"/>
-
-        <com.magnaideas.jamclub.Utils.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#34495e"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:singleLine="true"
-            android:text="3) We'll pay you back through paypal."/>
-
-        <com.magnaideas.jamclub.Utils.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#34495e"
-            android:textSize="15sp"
+            android:textSize="25sp"
             android:layout_marginTop="20dp"
-            android:singleLine="true"
-            android:text="ps: you can change your account at any time"/>
+            android:text="You'll get a notification, if we need you."/>
+
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:text="We'll pay you back through paypal."/>
+
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:text="ps: you can change your account at any time."/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:gravity="center_horizontal">
 
 

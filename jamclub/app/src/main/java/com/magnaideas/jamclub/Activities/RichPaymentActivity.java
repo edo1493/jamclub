@@ -108,7 +108,7 @@ public class RichPaymentActivity extends ActionBarActivity {
         budgetEdit.setEnabled(true);
 
         final TextView currencyTextView = (TextView)findViewById(R.id.currency);
-        currencyTextView.setText(" " + currencyCode);
+        currencyTextView.setText(" " + currencyCode + "(min. 300)");
 
     }
 
