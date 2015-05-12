@@ -78,6 +78,12 @@ public class ProgressToRichPayment extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Void... args) {
+            
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e2) {
+                // TODO Auto-generated catch block
+            }
 
             HashMap<String, Object> params = new HashMap<String, Object>();
             params.put("latitude", latitude);
@@ -87,14 +93,10 @@ public class ProgressToRichPayment extends ActionBarActivity {
                 public void done(String o, ParseException e) {
 
                     try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e2) {
-                        // TODO Auto-generated catch block
-                    }
-
-                    try {
                         JSONObject result = new JSONObject(o);
                         JSONArray products = result.getJSONArray("products");
+
+
                         if (products.length() > 0) {
                             // ok
 
