@@ -51,6 +51,7 @@ public class RichPaymentActivity extends ActionBarActivity {
     private double longitude;
     private String address;
     private String currencyCode;
+    private EditText budgetEdit;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -94,17 +95,10 @@ public class RichPaymentActivity extends ActionBarActivity {
             currencyCode = extras.getString("currency");
         }
 
-
-        //mLatitude = (TextView)findViewById(R.id.latitude);
-        //mLatitude.setText(" " + latitude);
-
-        //mLongitude = (TextView)findViewById(R.id.longitude);
-        //mLongitude.setText(" " + longitude);
-
         final Button payButton = (Button) findViewById(R.id.button);
         payButton.setEnabled(true);
 
-        final EditText budgetEdit = (EditText) findViewById(R.id.budget);
+        budgetEdit = (EditText) findViewById(R.id.budget);
         budgetEdit.setEnabled(true);
 
         final TextView currencyTextView = (TextView)findViewById(R.id.currency);
@@ -119,6 +113,11 @@ public class RichPaymentActivity extends ActionBarActivity {
         BigDecimal budget;
         try {
             budget = new BigDecimal(budgetString);
+            if(Integer.parseInt(budgetEdit.getText().toString()) < 300)
+            {
+                Toast.makeText(this, "Min. 300", Toast.LENGTH_LONG).show();
+                return;
+            }
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Not a valid amount", Toast.LENGTH_SHORT).show();
             return;
@@ -177,6 +176,7 @@ public class RichPaymentActivity extends ActionBarActivity {
     }
 
     private void afterPayment(PaymentConfirmation confirm, BigDecimal budget) {
+
         final ParseObject attack = new ParseObject("Attack");
         attack.put("attacker", ParseUser.getCurrentUser());
         if (confirm != null) {
