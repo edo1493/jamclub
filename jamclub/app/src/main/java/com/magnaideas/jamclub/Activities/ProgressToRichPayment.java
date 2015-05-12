@@ -85,6 +85,12 @@ public class ProgressToRichPayment extends ActionBarActivity {
                 public void done(String o, ParseException e) {
 
                     try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e2) {
+                        // TODO Auto-generated catch block
+                    }
+
+                    try {
                         JSONObject result = new JSONObject(o);
                         JSONArray products = result.getJSONArray("products");
                         if (products.length() > 0) {
@@ -93,13 +99,6 @@ public class ProgressToRichPayment extends ActionBarActivity {
                             // show currency on this page
                             JSONObject product = products.getJSONObject(0);
                             String currency_code = product.getJSONObject("price_details").getString("currency_code");
-
-
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e2) {
-                                // TODO Auto-generated catch block
-                            }
 
                             Intent intent = new Intent (mContext, RichPaymentActivity.class);
                             intent.putExtra("address", address);
@@ -111,12 +110,6 @@ public class ProgressToRichPayment extends ActionBarActivity {
 
                         } else {
                             // TODO: show "uber not available in this area"
-
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e2) {
-                                // TODO Auto-generated catch block
-                            }
                             /*Intent intent = new Intent();
                             setResult(ProgressToRichPayment.RESULT_OK, intent);
                             ProgressToRichPayment.this.finish();*/
