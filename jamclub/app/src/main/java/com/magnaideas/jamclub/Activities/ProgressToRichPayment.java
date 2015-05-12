@@ -78,7 +78,7 @@ public class ProgressToRichPayment extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Void... args) {
-            
+
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e2) {
