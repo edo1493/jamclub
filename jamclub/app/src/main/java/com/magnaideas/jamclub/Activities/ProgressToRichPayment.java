@@ -31,14 +31,12 @@ public class ProgressToRichPayment extends ActionBarActivity {
     private Double longitude;
     private String address;
     private Context mContext;
-    private Activity mInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progresstorichpayment);
         mContext = getApplicationContext();
-        mInstance = this;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

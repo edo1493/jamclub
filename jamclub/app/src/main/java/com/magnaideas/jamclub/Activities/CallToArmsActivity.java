@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.magnaideas.jamclub.R;
+import com.magnaideas.jamclub.Utils.CustomTitle;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseCloud;
@@ -45,6 +47,16 @@ public class CallToArmsActivity extends ActionBarActivity {
 
     public void accept(View view) {
         // send acceptance to server - associate with attack id
+
+        LinearLayout linear1 = (LinearLayout)findViewById(R.id.linear1);
+        LinearLayout linear2 = (LinearLayout)findViewById(R.id.accept_decline);
+
+        linear1.setVisibility(View.GONE);
+        linear2.setVisibility(View.GONE);
+
+        CustomTitle mThanks = (CustomTitle)findViewById(R.id.thanks);
+        mThanks.setVisibility(View.VISIBLE);
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Attack");
         query.getInBackground(attack_id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
@@ -56,7 +68,12 @@ public class CallToArmsActivity extends ActionBarActivity {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                // Thank the user and quit the app
+                                try {
+                                    Thread.sleep(2000);
+                                    finish();
+                                } catch (InterruptedException e2) {
+                                    // TODO Auto-generated catch block
+                                }
 
                             } else {
                                 Log.e(TAG, e.toString());
