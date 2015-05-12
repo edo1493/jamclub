@@ -42,14 +42,6 @@
             android:layout_marginTop="10dp"
             android:text="If we need your help."/>
 
-        <com.magnaideas.jamclub.Utils.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#34495e"
-            android:textSize="20sp"
-            android:layout_marginTop="15dp"
-            android:text="We pay back through paypal."/>
-
 
     </LinearLayout>
 
@@ -60,10 +52,18 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal">
 
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="20sp"
+            android:text="We pay back through paypal."/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
