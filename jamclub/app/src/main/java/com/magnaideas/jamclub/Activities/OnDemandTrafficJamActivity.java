@@ -248,9 +248,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("PORCOOOOOO DIOOOOOOOOOOOO!");
-        if (requestCode == PICK_LOCATION) {
 
+        if (requestCode == PICK_LOCATION) {
             if (resultCode == RESULT_OK) {
                 mSelectedLoc = true;
                 mCameraPosition = true;
@@ -260,9 +259,8 @@ public class OnDemandTrafficJamActivity extends ActionBarActivity implements
 
             }
         } else if (requestCode == UBER_SEARCH) {
-
             if (resultCode == RESULT_OK)
-                Toast.makeText(this, "UBER is not available in this area", Toast.LENGTH_LONG);
+                Toast.makeText(this, "UBER is not available in this area", Toast.LENGTH_LONG).show();
         }
     }
 

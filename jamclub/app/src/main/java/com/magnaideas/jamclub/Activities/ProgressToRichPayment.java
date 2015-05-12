@@ -31,12 +31,15 @@ public class ProgressToRichPayment extends ActionBarActivity {
     private Double longitude;
     private String address;
     private Context mContext;
+    private Activity mInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progresstorichpayment);
         mContext = getApplicationContext();
+        mInstance = this;
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             address = extras.getString("address");
@@ -47,6 +50,7 @@ public class ProgressToRichPayment extends ActionBarActivity {
         new LookingForUbers().execute();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,10 +114,9 @@ public class ProgressToRichPayment extends ActionBarActivity {
 
                         } else {
                             // TODO: show "uber not available in this area"
-                            /*Intent intent = new Intent();
+                            Intent intent = new Intent();
                             setResult(ProgressToRichPayment.RESULT_OK, intent);
-                            ProgressToRichPayment.this.finish();*/
-
+                            ProgressToRichPayment.this.finish();
                         }
                     } catch (JSONException e1) {
                         e1.printStackTrace();
