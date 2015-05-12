@@ -71,8 +71,8 @@ public class ProgressToRichPayment extends ActionBarActivity {
 
         @Override
         protected void onPreExecute() {
-            prgDlg = ProgressDialog.show(ProgressToRichPayment.this, "Uber Search",
-                    "We are checking if there are any Ubers", true);
+            prgDlg = ProgressDialog.show(ProgressToRichPayment.this, "",
+                    "Please wait", true);
 
         }
 
