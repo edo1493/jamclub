@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,11 +7,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
         android:gravity="center_horizontal"
-        android:layout_weight="1"
         android:paddingTop="20dp"
         >
 
@@ -20,60 +24,69 @@
             android:layout_height="wrap_content"
             android:textSize="35sp"
             android:textColor="#34495e"
-            android:singleLine="true"
-            android:layout_gravity="center_horizontal"
-            android:text="Jam Attack Rules"/>
-
-        <com.magnaideas.jamclub.Utils.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#34495e"
             android:layout_marginTop="30dp"
-            android:text="We'll order Ubers till the budget runs out."/>
+            android:text="Request cars"/>
 
-        <com.magnaideas.jamclub.Utils.CustomTextView
+        <com.magnaideas.jamclub.Utils.CustomTitle
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="35sp"
             android:textColor="#34495e"
-            android:textSize="25sp"
-            android:layout_marginTop="20dp"
-            android:text="You can't stop the attack after the payment."/>
+            android:layout_marginTop="10dp"
+            android:text="while money lasts"/>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal">
-
-            <EditText
-                android:id="@+id/budget"
-                android:textSize="25sp"
-                android:textColor="#34495e"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Enter a budget"/>
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="50dp">
 
             <com.magnaideas.jamclub.Utils.CustomTextView
                 android:id="@+id/currency"
-                android:layout_marginLeft="10dp"
                 android:textColor="#34495e"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/budget"
+                android:layout_alignBottom="@+id/budget"
+                android:layout_alignParentLeft="true"/>
 
-        </LinearLayout>
+
+            <EditText
+                android:id="@+id/budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="60dp"
+                android:hint="Enter a budget" >
+
+                <requestFocus />
+            </EditText>
+
+            <com.magnaideas.jamclub.Utils.CustomTextView
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/budget"
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(min. 300)"
+                android:textSize="15sp"
+                android:textColor="#34495e"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="3"
-        android:gravity="center">
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,5 +97,26 @@
             android:textColor="#ffffff"
             android:onClick="pay" />
 
+        <com.magnaideas.jamclub.Utils.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#34495e"
+            android:textSize="12sp"
+            android:layout_marginTop="15dp"
+            android:text="You can't stop the attack after the payment."/>
+
+
     </LinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+
+        android:background="@drawable/uber22"/>
+
+</RelativeLayout>

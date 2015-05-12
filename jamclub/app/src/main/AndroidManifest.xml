@@ -86,11 +86,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.RichPaymentActivity"
-            android:label="Jam Attack Payment"
+            android:label="Pay"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.SearchableActivity"
-            android:label="RichPaymentActivity"
+            android:label="Searchable Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.ProgressToRichPayment"
             android:label=""
