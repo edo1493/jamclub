@@ -82,7 +82,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.EarnPaymentActivity"
-            android:label="Jam Attack Bot"
+            android:label=""
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.RichPaymentActivity"

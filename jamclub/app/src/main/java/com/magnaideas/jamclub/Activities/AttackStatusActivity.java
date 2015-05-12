@@ -60,6 +60,8 @@ public class AttackStatusActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack_status);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         SharedPreferences sharedPref = getSharedPreferences("attack", MODE_PRIVATE);
         String attack_id = sharedPref.getString("attack_id", null);
 
@@ -252,8 +254,8 @@ public class AttackStatusActivity extends ActionBarActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            finish();
         }
         if (id == R.id.action_new_attack) {
 

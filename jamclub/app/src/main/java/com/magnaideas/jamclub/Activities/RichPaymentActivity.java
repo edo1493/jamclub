@@ -205,6 +205,7 @@ public class RichPaymentActivity extends ActionBarActivity {
                     //intent.putExtra("latitude", latitude);
                     //intent.putExtra("longitude", longitude);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

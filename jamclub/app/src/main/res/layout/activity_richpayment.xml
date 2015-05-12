@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:inputType="number"
                 android:paddingLeft="60dp"
                 android:hint="Enter a budget" >
 

@@ -1,5 +1,6 @@
 package com.magnaideas.jamclub.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -35,6 +36,7 @@ import java.net.URL;
 public class UberLoginActivity extends ActionBarActivity {
 
     private static final String TAG = "UberLoginActivity";
+    public ProgressDialog prgDlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class UberLoginActivity extends ActionBarActivity {
 
         final WebView webView = new WebView(this);
         setContentView(webView);
+        if(ParseUser.getCurrentUser().getEmail() != null)
+            prgDlg = ProgressDialog.show(UberLoginActivity.this, "Uber Login",
+                    "We are retrieving your account", true);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -62,7 +67,10 @@ public class UberLoginActivity extends ActionBarActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                if (prgDlg.isShowing())
+                    prgDlg.dismiss();
                 startActivity(intent);
+                finish();
                 return true;
 
             }
