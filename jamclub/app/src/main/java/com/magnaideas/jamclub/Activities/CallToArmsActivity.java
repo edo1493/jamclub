@@ -30,6 +30,7 @@ public class CallToArmsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_to_arms);
+        getSupportActionBar().hide();
 
         // TODO: check if attack is still ongoing
         try {
