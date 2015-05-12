@@ -48,15 +48,6 @@ public class CallToArmsActivity extends ActionBarActivity {
     public void accept(View view) {
         // send acceptance to server - associate with attack id
 
-        LinearLayout linear1 = (LinearLayout)findViewById(R.id.linear1);
-        LinearLayout linear2 = (LinearLayout)findViewById(R.id.accept_decline);
-
-        linear1.setVisibility(View.GONE);
-        linear2.setVisibility(View.GONE);
-
-        CustomTitle mThanks = (CustomTitle)findViewById(R.id.thanks);
-        mThanks.setVisibility(View.VISIBLE);
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Attack");
         query.getInBackground(attack_id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
@@ -69,6 +60,14 @@ public class CallToArmsActivity extends ActionBarActivity {
                         public void done(ParseException e) {
                             if (e == null) {
                                 try {
+                                    LinearLayout linear1 = (LinearLayout)findViewById(R.id.linear1);
+                                    LinearLayout linear2 = (LinearLayout)findViewById(R.id.accept_decline);
+
+                                    linear1.setVisibility(View.GONE);
+                                    linear2.setVisibility(View.GONE);
+
+                                    CustomTitle mThanks = (CustomTitle)findViewById(R.id.thanks);
+                                    mThanks.setVisibility(View.VISIBLE);
                                     Thread.sleep(2000);
                                     finish();
                                 } catch (InterruptedException e2) {
