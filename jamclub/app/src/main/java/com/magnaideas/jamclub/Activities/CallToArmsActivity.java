@@ -73,8 +73,7 @@ public class CallToArmsActivity extends ActionBarActivity {
     }
 
     public void decline(View view) {
-        // do nothing special
-        // quit the app
+        finish();
     }
 
     @Override
