@@ -115,7 +115,7 @@ public class RichPaymentActivity extends ActionBarActivity {
             budget = new BigDecimal(budgetString);
             if(Integer.parseInt(budgetEdit.getText().toString()) < 300)
             {
-                Toast.makeText(this, "Min. 300", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Minimum is 300", Toast.LENGTH_LONG).show();
                 return;
             }
         } catch (NumberFormatException e) {
@@ -237,6 +237,10 @@ public class RichPaymentActivity extends ActionBarActivity {
             BigDecimal budget;
             try {
                 budget = new BigDecimal(budgetString);
+                if(Integer.parseInt(budgetString) < 300) {
+                    Toast.makeText(this, "Minimum is 300", Toast.LENGTH_LONG).show();
+                    return false;
+                }
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Not a valid amount", Toast.LENGTH_SHORT).show();
                 return false;

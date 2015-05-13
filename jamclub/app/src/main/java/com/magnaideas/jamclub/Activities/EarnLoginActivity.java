@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.magnaideas.jamclub.R;
+import com.parse.ParseUser;
 
 /**
  * Created by edoardomoreni on 11/04/2015.
@@ -21,6 +22,12 @@ public class EarnLoginActivity extends Activity {
         /*mUberLogin = new WebView(this);
         mUberLogin.loadUrl("https://login.uber.com/login");*/
         setContentView(R.layout.activity_earnlogin);
+
+        if (ParseUser.getCurrentUser().getEmail() != null) {
+            Intent intent = new Intent(this, EarnPaymentActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void earnLogin (View v) {

@@ -45,8 +45,8 @@ public class UberLoginActivity extends ActionBarActivity {
         final WebView webView = new WebView(this);
         setContentView(webView);
         if(ParseUser.getCurrentUser().getEmail() != null)
-            prgDlg = ProgressDialog.show(UberLoginActivity.this, "Uber Login",
-                    "We are retrieving your account", true);
+            prgDlg = ProgressDialog.show(UberLoginActivity.this, "",
+                    "Please wait...", true);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -58,6 +58,8 @@ public class UberLoginActivity extends ActionBarActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (!Uri.parse(url).getHost().equals("localhost")) {
                     // This is my web site, so do not override; let my WebView load the page
+                    if (prgDlg.isShowing())
+                        prgDlg.dismiss();
                     return false;
                 }
                 // Otherwise, the link is not for a page on my site, so launch another Activity that handles URL

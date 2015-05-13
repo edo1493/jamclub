@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.magnaideas.jamclub.R;
@@ -46,6 +47,22 @@ public class CallToArmsActivity extends ActionBarActivity {
     }
 
     public void accept(View view) {
+
+        Button accButton = (Button) findViewById(R.id.acceptButton);
+        accButton.setEnabled(false);
+
+        Button declButton = (Button) findViewById(R.id.declineButton);
+        declButton.setEnabled(false);
+
+        LinearLayout linear1 = (LinearLayout)findViewById(R.id.linear1);
+        LinearLayout linear2 = (LinearLayout)findViewById(R.id.accept_decline);
+
+        linear1.setVisibility(View.GONE);
+        linear2.setVisibility(View.GONE);
+
+        CustomTitle mThanks = (CustomTitle)findViewById(R.id.thanks);
+        mThanks.setVisibility(View.VISIBLE);
+
         // send acceptance to server - associate with attack id
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Attack");
@@ -60,14 +77,6 @@ public class CallToArmsActivity extends ActionBarActivity {
                         public void done(ParseException e) {
                             if (e == null) {
                                 try {
-                                    LinearLayout linear1 = (LinearLayout)findViewById(R.id.linear1);
-                                    LinearLayout linear2 = (LinearLayout)findViewById(R.id.accept_decline);
-
-                                    linear1.setVisibility(View.GONE);
-                                    linear2.setVisibility(View.GONE);
-
-                                    CustomTitle mThanks = (CustomTitle)findViewById(R.id.thanks);
-                                    mThanks.setVisibility(View.VISIBLE);
                                     Thread.sleep(2000);
                                     finish();
                                 } catch (InterruptedException e2) {
