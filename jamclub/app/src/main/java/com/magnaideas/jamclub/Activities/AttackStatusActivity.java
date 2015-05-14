@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.magnaideas.jamclub.R;
 import com.magnaideas.jamclub.Utils.LatLngInterpolator;
 import com.magnaideas.jamclub.Utils.MarkerAnimation;
+import com.magnaideas.jamclub.Utils.RotationInterpolator;
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -151,39 +152,41 @@ public class AttackStatusActivity extends ActionBarActivity implements
             @Override
             public void done(List<ParseObject> list, ParseException e) {
 
-                for (int i = 0; i < list.size(); i++) {
-                    ParseObject acceptance = list.get(i);
+                if (e == null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        ParseObject acceptance = list.get(i);
 
-                    String request_id = acceptance.getString("request_id");
-                    if (request_id != null) {
-                        HashMap<String, Object> params = new HashMap<>();
-                        params.put("request_id", request_id);
-                        ParseCloud.callFunctionInBackground("uberStatusUpdate", params);
+                        String request_id = acceptance.getString("request_id");
+                        if (request_id != null) {
+                            HashMap<String, Object> params = new HashMap<>();
+                            params.put("request_id", request_id);
+                            ParseCloud.callFunctionInBackground("uberStatusUpdate", params);
 
-                        LatLng newPos = new LatLng(acceptance.getDouble("current_latitude"), acceptance.getDouble("current_longitude"));
-                        Integer newRot = acceptance.getInt("current_bearing");
+                            LatLng newPos = new LatLng(acceptance.getDouble("current_latitude"), acceptance.getDouble("current_longitude"));
+                            Integer newRot = acceptance.getInt("current_bearing") + 90;
 
-                        Log.d(TAG, "latitude: " + acceptance.getDouble("current_latitude"));
-                        Log.d(TAG, "longitude: " + acceptance.getDouble("current_longitude"));
-                        Log.d(TAG, "bearing: " + acceptance.getInt("current_bearing"));
+                            //Log.d(TAG, "latitude: " + acceptance.getDouble("current_latitude"));
+                            //Log.d(TAG, "longitude: " + acceptance.getDouble("current_longitude"));
+                            //Log.d(TAG, "bearing: " + acceptance.getInt("current_bearing"));
 
-                        if (markers.containsKey(request_id)) {
-                            Marker marker = markers.get(request_id);
-                            moveMarkers(marker, newPos);
+                            if (markers.containsKey(request_id)) {
+                                Marker marker = markers.get(request_id);
+                                moveMarkers(marker, newPos, newRot);
 
-                        } else {
-                            // create new marker
-                            MarkerOptions opts = new MarkerOptions();
-                            opts.flat(true);
-                            opts.rotation(newRot);
-                            opts.position(newPos);
-                            opts.icon(BitmapDescriptorFactory.fromBitmap(resizeCarIcon(getDrawable(R.drawable.uberblack))));
-                            markers.put(request_id, mMap.addMarker(opts));
+                            } else {
+                                // create new marker
+                                MarkerOptions opts = new MarkerOptions();
+                                opts.flat(true);
+                                opts.rotation(newRot);
+                                opts.position(newPos);
+                                opts.icon(BitmapDescriptorFactory.fromBitmap(resizeCarIcon(getDrawable(R.drawable.uberblack))));
+                                markers.put(request_id, mMap.addMarker(opts));
+
+                            }
 
                         }
 
                     }
-
                 }
             }
         });
@@ -203,10 +206,11 @@ public class AttackStatusActivity extends ActionBarActivity implements
     }
 
     //this method wants marker and its final position
-    public static void moveMarkers(Marker m, LatLng finalPosition)
+    public static void moveMarkers(Marker m, LatLng finalPosition, int finalRotation)
     {
         LatLngInterpolator interpolator = new LatLngInterpolator.Linear();
-        MarkerAnimation.animateMarkerToGB(m, finalPosition, interpolator);
+        RotationInterpolator rotationInterpolator = new RotationInterpolator.Linear();
+        MarkerAnimation.animateMarkerToGB(m, finalPosition, finalRotation, interpolator, rotationInterpolator);
     }
 
     @Override
@@ -236,7 +240,7 @@ public class AttackStatusActivity extends ActionBarActivity implements
                 timerTaskRun();
             }
         };
-        mTimer.scheduleAtFixedRate(mTimerTask, 0, 5000);
+        mTimer.scheduleAtFixedRate(mTimerTask, 0, 4000);
     }
 
     @Override

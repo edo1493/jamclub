@@ -359,3 +359,34 @@ Parse.Cloud.define("checkAvailability", function(request, response) {
     },
   });
 });
+
+  Parse.Cloud.beforeDelete("Acceptance", function(request, response) {
+    console.log("ASDF");
+    var acceptance_req_id = request.object.get('request_id');
+    var acceptance_user = request.object.get('user');
+    acceptance_user.fetch({
+      success: function(userObj) {
+        var user_token = userObj.get('uber_access_token');
+        Parse.Cloud.httpRequest({
+          method: 'DELETE',
+          url: 'https://sandbox-api.uber.com/v1/requests/' + acceptance_req_id,
+          headers: {
+              'Authorization': 'Bearer '+user_token,
+          },
+          success: function(httpResponse) {
+            console.log("cancelled request");
+            console.log(httpResponse.text);
+            response.success();
+          },
+          error: function(httpResponse) {
+            console.error(httpResponse);
+            response.error();
+          },
+        });
+      },
+      error: function(object, error) {
+        console.error(error);
+        response.error();
+      }
+    });
+  });

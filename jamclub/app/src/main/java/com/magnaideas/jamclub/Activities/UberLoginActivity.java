@@ -44,7 +44,7 @@ public class UberLoginActivity extends ActionBarActivity {
 
         final WebView webView = new WebView(this);
         setContentView(webView);
-        if(ParseUser.getCurrentUser().getEmail() != null)
+        //if(ParseUser.getCurrentUser().getEmail() != null)
             prgDlg = ProgressDialog.show(UberLoginActivity.this, "",
                     "Please wait...", true);
 
