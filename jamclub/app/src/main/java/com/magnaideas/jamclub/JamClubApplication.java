@@ -18,9 +18,5 @@ public class JamClubApplication extends Application {
         Parse.initialize(this, "YO9PnxwMx00UPahR2zJP2Lh8IiitPO63uBQ8u0NF", "iwBrWy8xqdUUhU6y3owDtDz22vHXFnhDH0YpMiJF");
 
         ParseUser.enableAutomaticUser();
-
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("user", ParseUser.getCurrentUser());
-        installation.saveInBackground();
     }
 }

@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 
 import com.magnaideas.jamclub.R;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import org.apache.http.HttpResponse;
@@ -66,6 +67,11 @@ public class UberLoginActivity extends ActionBarActivity {
                 try {
                     ParseUser.logIn(Uri.parse(url).getQueryParameter("username"),
                                     Uri.parse(url).getQueryParameter("password"));
+
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put("user", ParseUser.getCurrentUser());
+                    installation.saveInBackground();
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
